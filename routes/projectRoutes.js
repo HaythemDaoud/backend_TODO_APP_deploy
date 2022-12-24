@@ -6,7 +6,7 @@ const {
   createproject,
   getProjects
  
-} = require('../controllers/projectcontroller')
+} = require('../controllers/projectController')
 
 const { protectgroup } = require('../middleware/authMiddlewaregroup')
 

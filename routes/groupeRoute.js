@@ -9,7 +9,7 @@ const {
   getGroups,
   deleteGroup,
  
-} = require('../controllers/groupcontroller')
+} = require('../controllers/groupController')
 
 const { protect } = require('../middleware/authMiddleware')
 
