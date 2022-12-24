@@ -10,7 +10,9 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.set('view engine','ejs');
-app.set('view engine','html');
+app.set('views', __dirname + '/views');
+//app.set('view engine','html');
+//app.engine('html', require('ejs').renderFile);
 
 
 app.use('/api/users', require('./routes/userRoutes'));
