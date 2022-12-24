@@ -26,7 +26,24 @@ function generateCode()
 	}
 	return retVal;
 }
+
 // reset password 
+ async function resetPassword (req, res) {
+	const { email, password,} = req.body;
+	const user = await User.findOne({ email });
+	if (!user) {
+		res.status(400).json({ error: "User don't exists" });
+	} else {
+		const token = generateCode();
+		process.env.code=token;
+		user.token = token;
+		const salt = await bcrypt.genSalt(10);
+		user.password = await bcrypt.hash(password, salt);
+		await user.save();
+		res.status(200).json({ message: "password changed" })
+			};
+			};
+
 function forgot_password(req,res,next){
   
   User.findOne({ "email": req.body.email }).then(user=>{
@@ -37,7 +54,7 @@ function forgot_password(req,res,next){
       const payload = {username: user.username,email:user.email};
       const token = jwt.sign(payload,secret,{expiresIn: '5m'});
       console.log('req.headers.host'+ 'verification lien de host ');
-      const link = `http://${req.headers.host}/api/userp/reset_password/${user.email}/${token}`
+      const link = `https://${req.headers.host}/api/userp/reset_password/${user.email}/${token}`
       console.log(link);
       res.status(200).json({msg:`password send to your email Mr./Mrs ${user.username}`});
 
@@ -131,6 +148,6 @@ async function editUser  (req, res) {
 
 module.exports = {
 
-  editUser,forgot_password,reset_password_get,reset_password_post
+  editUser,resetPassword,forgot_password,reset_password_get,reset_password_post
 
 }

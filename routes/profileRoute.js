@@ -13,6 +13,8 @@ const {
 
 router.post('/editus', editUser)
 
+router.post('/resetPwd', resetPassword)
+
 router
 .route('/forgot_password')
 .post(forgot_password);
